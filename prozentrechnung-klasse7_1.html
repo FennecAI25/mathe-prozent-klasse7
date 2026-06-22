@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prozentrechnung – Dein persönlicher Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #fdf6ff;
+  --card: #ffffff;
+  --border: #e8d5f5;
+  --purple: #7c3aed;
+  --purple-light: #f3e8ff;
+  --purple-mid: #a855f7;
+  --pink: #ec4899;
+  --pink-light: #fce7f3;
+  --teal: #0891b2;
+  --teal-light: #e0f7fa;
+  --amber: #d97706;
+  --amber-light: #fef3c7;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --red: #dc2626;
+  --red-light: #fee2e2;
+  --text: #1e1033;
+  --muted: #6b5b8a;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 64px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+  padding: 48px 24px 40px;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '%';
+  position: absolute;
+  font-size: 280px;
+  font-weight: 900;
+  opacity: 0.06;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  user-select: none;
+}
+
+.hero-emoji { font-size: 2.8rem; margin-bottom: 12px; display: block; }
+
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1rem;
+  opacity: 0.92;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto 20px;
+}
+
+.papa-note {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 99px;
+  padding: 8px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* NAV TABS */
+.nav-wrap {
+  background: white;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 8px;
+  gap: 2px;
+}
+
+.nav-tabs::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 14px 16px 12px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.nav-btn.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+}
+
+/* CONTENT */
+.content { max-width: 800px; margin: 0 auto; padding: 28px 16px 0; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* SECTION HEADERS */
+.sec-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 32px 0 12px;
+}
+
+.sec-label:first-child { margin-top: 0; }
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+/* DREIECK DER 3 GRÖSSEN */
+.triangle-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 20px;
+}
+
+.triangle-svg-wrap {
+  position: relative;
+  width: 260px;
+  height: 200px;
+}
+
+.tri-label {
+  position: absolute;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.tri-label small {
+  display: block;
+  font-weight: 600;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+.tri-top { top: 10px; left: 50%; transform: translateX(-50%); color: var(--purple); }
+.tri-bl  { bottom: 10px; left: 10px; color: var(--pink); }
+.tri-br  { bottom: 10px; right: 10px; color: var(--teal); }
+
+/* FORMEL CARDS */
+.formel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.formel-card {
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1.5px solid;
+}
+
+.formel-card.purple { background: var(--purple-light); border-color: #c4b5fd; }
+.formel-card.pink   { background: var(--pink-light);   border-color: #f9a8d4; }
+.formel-card.teal   { background: var(--teal-light);   border-color: #67e8f9; }
+
+.formel-card .what {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  opacity: 0.65;
+}
+
+.formel-card .formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.formel-card .formula .frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.formel-card .formula .frac span:first-child {
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 1px;
+  font-size: 0.9em;
+}
+
+.formel-card .formula .frac span:last-child {
+  padding-top: 1px;
+  font-size: 0.9em;
+}
+
+.formel-card .example-mini {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+/* SCHRITTE */
+.steps { counter-reset: step; }
+
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.step-num {
+  counter-increment: step;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--purple-mid));
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-body h4 { font-size: 0.92rem; font-weight: 800; margin-bottom: 4px; }
+.step-body p  { font-size: 0.85rem; line-height: 1.6; color: var(--muted); }
+.step-body code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--purple-light);
+  color: var(--purple);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* AMPEL-BOX */
+.ampel {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.ampel-item {
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  text-align: center;
+  border: 1.5px solid;
+}
+
+.ampel-item .big { font-size: 1.6rem; margin-bottom: 4px; }
+.ampel-item h4   { font-size: 0.82rem; font-weight: 800; margin-bottom: 4px; }
+.ampel-item p    { font-size: 0.76rem; line-height: 1.5; color: var(--muted); }
+
+.ampel-item.green  { background: var(--green-light);  border-color: #86efac; }
+.ampel-item.amber  { background: var(--amber-light);  border-color: #fcd34d; }
+.ampel-item.purple { background: var(--purple-light); border-color: #c4b5fd; }
+
+/* SYNONYME */
+.syn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.syn-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.syn-trigger {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.syn-word {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.syn-equals {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--purple);
+}
+
+/* TEXTAUFGABE */
+.detective {
+  background: linear-gradient(135deg, #1e1033, #3b1d8a);
+  color: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.detective h3 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+.detective p  { font-size: 0.85rem; opacity: 0.85; margin-bottom: 16px; }
+
+.clue {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.clue-icon { font-size: 1.3rem; flex-shrink: 0; }
+.clue-text { font-size: 0.83rem; line-height: 1.55; }
+.clue-text strong { display: block; margin-bottom: 2px; font-size: 0.85rem; }
+
+/* BEISPIEL AUFGABE LÖSUNG */
+.aufgabe-block {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.aufgabe-top {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.aufgabe-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+.badge-pw  { background: var(--purple-light); color: var(--purple); }
+.badge-pz  { background: var(--pink-light);   color: var(--pink); }
+.badge-gw  { background: var(--teal-light);   color: var(--teal); }
+.badge-txt { background: var(--amber-light);  color: var(--amber); }
+
+.aufgabe-top h3 { font-size: 0.95rem; font-weight: 800; line-height: 1.4; }
+
+.loesung-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--purple);
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.loesung-toggle:hover { background: var(--purple-light); }
+
+.loesung-body {
+  display: none;
+  padding: 0 18px 18px;
+}
+
+.loesung-body.open { display: block; }
+
+.loesung-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.ls-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--purple-light);
+  color: var(--purple);
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ls-text { font-size: 0.85rem; line-height: 1.6; }
+.ls-text .calc {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.answer-box {
+  background: var(--green-light);
+  border: 1.5px solid #86efac;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* KALKULATOR */
+.calc-card {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  color: white;
+  margin-bottom: 14px;
+}
+
+.calc-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+.calc-card p  { font-size: 0.82rem; opacity: 0.85; margin-bottom: 20px; }
+
+.calc-toggle-row {
+  display: flex;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.calc-mode {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 8px 4px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.calc-mode.active {
+  background: white;
+  color: var(--purple);
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input-group input::placeholder { color: rgba(255,255,255,0.45); }
+.input-group input:focus { border-color: rgba(255,255,255,0.7); }
+
+.calc-btn {
+  width: 100%;
+  background: white;
+  color: var(--purple);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: opacity 0.15s;
+}
+
+.calc-btn:hover { opacity: 0.9; }
+
+.calc-result {
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.result-label { font-size: 0.8rem; opacity: 0.75; margin-top: 2px; }
+
+/* TIPPS */
+.tipp-list { display: flex; flex-direction: column; gap: 10px; }
+
+.tipp {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.tipp-icon { font-size: 1.4rem; flex-shrink: 0; }
+.tipp-text { font-size: 0.86rem; line-height: 1.6; }
+.tipp-text strong { display: block; font-weight: 800; margin-bottom: 2px; }
+
+/* MOTIVATIONS BANNER */
+.moti-banner {
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.moti-banner h2 { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; }
+.moti-banner p  { font-size: 0.88rem; opacity: 0.92; line-height: 1.6; }
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .ampel { grid-template-columns: 1fr; }
+  .formel-grid { grid-template-columns: 1fr; }
+  .input-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">🧮✨</span>
+  <h1>Prozentrechnung<br>— kein Stress mehr!</h1>
+  <p>Papa erklärt dir alles. Schritt für Schritt. Mit echten Beispielen. Du schaffst das — ich weiß es!</p>
+  <span class="papa-note">💜 Von Papa, speziell für dich</span>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-btn active" onclick="showTab('grundlagen')">🔢 Grundlagen</button>
+    <button class="nav-btn" onclick="showTab('formeln')">📐 Formeln</button>
+    <button class="nav-btn" onclick="showTab('dreisatz')">🔺 Dreisatz</button>
+    <button class="nav-btn" onclick="showTab('aufgaben')">✏️ Aufgabentypen</button>
+    <button class="nav-btn" onclick="showTab('textaufgaben')">📝 Textaufgaben</button>
+    <button class="nav-btn" onclick="showTab('training')">🏋️ Training</button>
+    <button class="nav-btn" onclick="showTab('meister')">👑 Meister</button>
+    <button class="nav-btn" onclick="showTab('synonyme')">🔍 Synonyme</button>
+    <button class="nav-btn" onclick="showTab('rechner')">🧮 Rechner</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════ GRUNDLAGEN ═══════════ -->
+<div class="tab-panel active" id="tab-grundlagen">
+
+  <div class="moti-banner">
+    <h2>🎯 Prozent ist einfach!</h2>
+    <p>Prozent bedeutet nur: „von Hundert". Das war's. Alles andere ist nur Rechnen. Und das kannst du!</p>
+  </div>
+
+  <p class="sec-label">Die 3 Größen — du brauchst immer genau 2, um die 3. zu finden</p>
+
+  <div class="card">
+    <div class="ampel">
+      <div class="ampel-item green">
+        <div class="big">🏠</div>
+        <h4>Grundwert (G)</h4>
+        <p>Das <strong>Ganze</strong>. Der Ausgangswert. Das, <strong>wovon</strong> man den Prozentsatz berechnet.</p>
+      </div>
+      <div class="ampel-item amber">
+        <div class="big">🎯</div>
+        <h4>Prozentwert (W)</h4>
+        <p>Der <strong>Teil</strong> des Ganzen. Das Ergebnis. Der <strong>konkrete</strong> Betrag oder die Menge.</p>
+      </div>
+      <div class="ampel-item purple">
+        <div class="big">%</div>
+        <h4>Prozentsatz (p)</h4>
+        <p>Die <strong>Zahl mit dem %</strong>-Zeichen. Z.B. 20 %, 75 %, 100 %.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--purple-light); border-radius:var(--radius-sm); padding:14px; font-size:0.88rem; line-height:1.7;">
+      <strong>🌟 Konkretes Beispiel:</strong><br>
+      Ein T-Shirt kostet <strong>40 € (= G)</strong>. Es ist um <strong>25 % (= p)</strong> reduziert. Du sparst <strong>10 € (= W)</strong>.<br><br>
+      👉 <em>G = das ganze T-Shirt (40 €) &nbsp;·&nbsp; p = der Rabatt (25 %) &nbsp;·&nbsp; W = was du sparst (10 €)</em>
+    </div>
+  </div>
+
+  <p class="sec-label">Das Geheimnis: Was habe ich? Was suche ich?</p>
+
+  <div class="card steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Lese die Aufgabe und markiere die 3 Stellen</h4>
+        <p>Suche nach: einer Zahl mit %, einer großen Zahl (= das Ganze) und dem Gesuchten. Schreib G = ?, W = ?, p = ? hin und fülle aus, was du weißt.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Was fehlt? → Das ist dein Ziel</h4>
+        <p>Genau <strong>eine</strong> der drei Größen fehlt. Die berechnest du mit der passenden Formel. Kein Rätselraten — nur einsetzen!</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Ergebnis mit Einheit und Antwortsatz</h4>
+        <p>Vergiss nie: <code>€</code>, <code>kg</code>, <code>%</code> ans Ergebnis schreiben. Und ein Antwortsatz: <em>„Der Prozentwert beträgt 10 €."</em></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label">Das 100-Euro-Bild — einmal verstehen, immer wissen</p>
+
+  <div class="card" style="text-align:center;">
+    <div style="font-size:0.88rem; color:var(--muted); margin-bottom:12px;">Stell dir vor, G ist immer ein Kuchen mit 100 Stücken:</div>
+    <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+      <div style="background:var(--purple-light); border-radius:8px; padding:10px 16px; font-size:0.88rem; font-weight:700; color:var(--purple);">100 % = der ganze Kuchen 🎂</div>
+      <div style="background:var(--green-light); border-radius:8px; padding:10px 16px; font-size:0.88rem; font-weight:700; color:var(--green);">50 % = die Hälfte 🍰</div>
+      <div style="background:var(--amber-light); border-radius:8px; padding:10px 16px; font-size:0.88rem; font-weight:700; color:var(--amber);">25 % = ein Viertel 🍮</div>
+      <div style="background:var(--pink-light); border-radius:8px; padding:10px 16px; font-size:0.88rem; font-weight:700; color:var(--pink);">10 % = ein Zehntel 🧁</div>
+    </div>
+    <div style="font-size:0.82rem; color:var(--muted);">👉 1 % von irgendetwas = dieses Etwas geteilt durch 100. Fertig!</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ FORMELN ═══════════ -->
+<div class="tab-panel" id="tab-formeln">
+
+  <p class="sec-label">Die 3 Formeln — lern diese auswendig, dann kannst du ALLES</p>
+
+  <div class="formel-grid">
+    <div class="formel-card purple">
+      <div class="what">Prozentwert W suchen</div>
+      <div class="formula">
+        W = G · <div class="frac"><span>p</span><span>100</span></div>
+      </div>
+      <div class="example-mini">
+        z.B. G=200€, p=15%<br>
+        W = 200 · 15/100 = <strong>30 €</strong>
+      </div>
+    </div>
+    <div class="formel-card pink">
+      <div class="what">Prozentsatz p suchen</div>
+      <div class="formula">
+        p = <div class="frac"><span>W · 100</span><span>G</span></div>
+      </div>
+      <div class="example-mini">
+        z.B. W=30€, G=200€<br>
+        p = 30·100/200 = <strong>15 %</strong>
+      </div>
+    </div>
+    <div class="formel-card teal">
+      <div class="what">Grundwert G suchen</div>
+      <div class="formula">
+        G = <div class="frac"><span>W · 100</span><span>p</span></div>
+      </div>
+      <div class="example-mini">
+        z.B. W=30€, p=15%<br>
+        G = 30·100/15 = <strong>200 €</strong>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label">Der Gedanken-Trick: Das Dreieck 🔺</p>
+
+  <div class="card">
+    <div style="font-size:0.88rem; color:var(--muted); margin-bottom:14px; line-height:1.6;">
+      Male das Dreieck auf deinen Spickzettel! Deck die Größe ab, die du suchst — was übrig bleibt ist deine Formel.
+    </div>
+    <div style="background:var(--purple-light); border-radius:var(--radius-sm); padding:20px; text-align:center; font-family:'JetBrains Mono', monospace; font-size:0.95rem; line-height:2;">
+      <div style="font-weight:700; font-size:1rem; color:var(--purple);">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ W ]<br>
+        &nbsp;&nbsp;&nbsp;────────<br>
+        &nbsp;[ G ] · [ p/100 ]
+      </div>
+    </div>
+    <div style="margin-top:14px; font-size:0.85rem; line-height:1.7; color:var(--text);">
+      <strong>🙈 Decke W ab</strong> → siehst du G · p/100 → das ist die Formel für W<br>
+      <strong>🙈 Decke G ab</strong> → siehst du W ÷ (p/100) → das ist die Formel für G<br>
+      <strong>🙈 Decke p ab</strong> → siehst du W ÷ G → das ist die Formel für p (dann ×100)
+    </div>
+  </div>
+
+  <p class="sec-label">Die 1%-Methode — wenn du die Formeln vergisst</p>
+
+  <div class="card">
+    <div style="font-size:0.88rem; line-height:1.8; color:var(--text);">
+      <strong>Immer funktioniert dieser Weg:</strong><br><br>
+      <span style="background:var(--green-light); padding:2px 8px; border-radius:4px; font-weight:700;">Schritt 1:</span> Berechne 1 % → G ÷ 100<br>
+      <span style="background:var(--amber-light); padding:2px 8px; border-radius:4px; font-weight:700;">Schritt 2:</span> Multipliziere mit dem Prozentsatz<br><br>
+      <div style="background:var(--purple-light); border-radius:var(--radius-sm); padding:12px; margin-top:8px;">
+        <strong>Beispiel:</strong> 30 % von 250 € = ?<br>
+        1 % von 250 € = 250 ÷ 100 = <strong>2,50 €</strong><br>
+        30 % = 2,50 × 30 = <strong>75 €</strong> ✅
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ DREISATZ ═══════════ -->
+<div class="tab-panel" id="tab-dreisatz">
+
+  <div class="moti-banner">
+    <h2>🔺 Die Dreisatz-Methode</h2>
+    <p>Keine Formel auswendig lernen! Einfach logisch in 3 Schritten denken — funktioniert IMMER!</p>
+  </div>
+
+  <p class="sec-label">Die Idee dahinter — so einfach wie Einkaufen</p>
+
+  <div class="card">
+    <div style="font-size:0.92rem; line-height:1.9; color:var(--text);">
+      Du weißt: <strong>80 % = 40 €</strong>. Du willst wissen: <strong>100 % = ?</strong><br>
+      Logik: Wenn du weißt was 80 Stück kosten, rechnest du erst was 1 Stück kostet — dann was 100 Stück kosten. Genau das ist der Dreisatz!
+    </div>
+  </div>
+
+  <p class="sec-label">Das Dreieck — dein visuelles Werkzeug</p>
+
+  <div class="card" style="text-align:center;">
+    <div style="display:inline-block; position:relative; width:260px; height:220px; margin:0 auto 16px;">
+      <svg width="260" height="220" viewBox="0 0 260 220">
+        <!-- Triangle -->
+        <polygon points="130,10 10,200 250,200" fill="#f3e8ff" stroke="#7c3aed" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- W top -->
+        <rect x="90" y="0" width="80" height="36" rx="8" fill="#7c3aed"/>
+        <text x="130" y="13" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="white">W</text>
+        <text x="130" y="27" text-anchor="middle" font-family="Nunito,sans-serif" font-size="10" fill="#e9d5ff">Prozentwert</text>
+        <!-- G bottom left -->
+        <rect x="0" y="186" width="80" height="34" rx="8" fill="#0891b2"/>
+        <text x="40" y="199" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="white">G</text>
+        <text x="40" y="213" text-anchor="middle" font-family="Nunito,sans-serif" font-size="10" fill="#cffafe">Grundwert</text>
+        <!-- p bottom right -->
+        <rect x="180" y="186" width="80" height="34" rx="8" fill="#ec4899"/>
+        <text x="220" y="199" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="white">p %</text>
+        <text x="220" y="213" text-anchor="middle" font-family="Nunito,sans-serif" font-size="10" fill="#fce7f3">Prozentsatz</text>
+        <!-- divider line -->
+        <line x1="70" y1="110" x2="190" y2="110" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <!-- mal zeichen -->
+        <text x="130" y="160" text-anchor="middle" font-family="Nunito,sans-serif" font-size="13" font-weight="700" fill="#6b5b8a">G  ×  p/100</text>
+        <text x="130" y="100" text-anchor="middle" font-family="Nunito,sans-serif" font-size="12" font-weight="700" fill="#7c3aed">W</text>
+      </svg>
+    </div>
+    <div style="font-size:0.83rem; color:var(--muted); line-height:1.7;">
+      👆 Deck die Größe ab, die du suchst — der Rest zeigt dir die Formel!<br>
+      <strong>W abdecken</strong> → G × p/100 &nbsp;·&nbsp; <strong>G abdecken</strong> → W ÷ (p/100) &nbsp;·&nbsp; <strong>p abdecken</strong> → W/G × 100
+    </div>
+  </div>
+
+  <p class="sec-label">Die 3 Schritte des Dreisatzes — Papa's Methode ⭐</p>
+
+  <div class="card" style="background: linear-gradient(135deg,#1e1033,#3b1d8a); color:white; border:none;">
+    <div style="font-size:0.88rem; line-height:1.5; margin-bottom:16px; opacity:0.85;">Egal was gesucht ist — diese 3 Zeilen schreibst du IMMER hin:</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.95rem; line-height:2.2;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="background:rgba(255,255,255,0.15); border-radius:6px; padding:2px 10px; font-weight:700; min-width:28px; text-align:center;">1</span>
+        <span><span style="color:#c4b5fd;">p %</span> &nbsp;→&nbsp; <span style="color:#fcd34d;">W (bekannt)</span></span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="background:rgba(255,255,255,0.15); border-radius:6px; padding:2px 10px; font-weight:700; min-width:28px; text-align:center;">2</span>
+        <span><span style="color:#c4b5fd;">1 %</span> &nbsp;→&nbsp; W ÷ p</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="background:rgba(255,255,255,0.15); border-radius:6px; padding:2px 10px; font-weight:700; min-width:28px; text-align:center;">3</span>
+        <span><span style="color:#86efac;">? %</span> &nbsp;→&nbsp; (W ÷ p) × ?</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label">Dreisatz für alle 3 Fälle — live erklärt</p>
+
+  <!-- FALL 1: W suchen -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">Fall 1 — W suchen</span>
+      <h3>Ein Handy kostet 400 €. Es ist 15 % reduziert. Wie viel spart man?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Dreisatz-Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--purple-light); border-radius:var(--radius-sm); padding:14px; margin-top:10px; font-size:0.9rem; line-height:2.1;">
+        <div><span style="color:var(--muted);">100 %  →</span>  400 € &nbsp;<span style="color:var(--muted); font-size:0.8rem;">(G = das Ganze)</span></div>
+        <div><span style="color:var(--muted);">  1 %  →</span>  400 ÷ 100 = <strong style="color:var(--purple);">4 €</strong></div>
+        <div><span style="color:var(--green);">  15 % →</span>  4 × 15 = <strong style="color:var(--green);">60 €</strong></div>
+      </div>
+      <div class="answer-box">✅ Man spart 60 €. Das Handy kostet noch 400 − 60 = 340 €.</div>
+    </div>
+  </div>
+
+  <!-- FALL 2: p suchen -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pz">Fall 2 — p suchen</span>
+      <h3>Lena hat 250 € gespart. Sie gibt 75 € für Schuhe aus. Wie viel Prozent gibt sie aus?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Dreisatz-Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--pink-light); border-radius:var(--radius-sm); padding:14px; margin-top:10px; font-size:0.9rem; line-height:2.1;">
+        <div><span style="color:var(--muted);">250 €  →</span>  100 % &nbsp;<span style="color:var(--muted); font-size:0.8rem;">(G = alles)</span></div>
+        <div><span style="color:var(--muted);">   1 €  →</span>  100 ÷ 250 = <strong style="color:var(--pink);">0,4 %</strong></div>
+        <div><span style="color:var(--pink);">  75 €  →</span>  0,4 × 75 = <strong style="color:var(--pink);">30 %</strong></div>
+      </div>
+      <div class="answer-box">✅ Lena gibt 30 % ihres Ersparten für Schuhe aus.</div>
+    </div>
+  </div>
+
+  <!-- FALL 3: G suchen — die berühmte Falle! -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-gw">Fall 3 — G suchen (Papa's Methode!)</span>
+      <h3>Nach 20 % Rabatt kostet die E-Rolle noch 280 €. Was hat sie vorher gekostet?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Dreisatz-Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="background:var(--amber-light); border-radius:var(--radius-sm); padding:10px 14px; margin-top:10px; font-size:0.83rem; color:var(--amber);">
+        ⚠️ <strong>Achtung:</strong> 280 € ist NICHT G — die 280 € sind nur 80 % (weil 100 % − 20 % = 80 %)!
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--teal-light); border-radius:var(--radius-sm); padding:14px; margin-top:10px; font-size:0.9rem; line-height:2.1;">
+        <div><span style="color:var(--muted);"> 80 %  →</span>  280 € &nbsp;<span style="color:var(--muted); font-size:0.8rem;">(das zahle ich nach Rabatt)</span></div>
+        <div><span style="color:var(--muted);">  1 %  →</span>  280 ÷ 80 = <strong style="color:var(--teal);">3,50 €</strong></div>
+        <div><span style="color:var(--teal);">100 %  →</span>  3,50 × 100 = <strong style="color:var(--teal);">350 €</strong></div>
+      </div>
+      <div class="answer-box">✅ Die E-Rolle hat vorher 350 € gekostet. Schnell-Check: 20 % von 350 = 70 € → 350 − 70 = 280 ✔️</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Dreisatz vs. Formel — was ist besser?</p>
+  <div class="card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div style="background:var(--purple-light); border-radius:var(--radius-sm); padding:14px;">
+        <div style="font-weight:800; color:var(--purple); margin-bottom:6px;">🔺 Dreisatz</div>
+        <div style="font-size:0.83rem; line-height:1.7; color:var(--text);">✅ Keine Formel nötig<br>✅ Logisch verständlich<br>✅ Für alle 3 Fälle gleich<br>✅ Fehler sofort sichtbar</div>
+      </div>
+      <div style="background:var(--teal-light); border-radius:var(--radius-sm); padding:14px;">
+        <div style="font-weight:800; color:var(--teal); margin-bottom:6px;">📐 Formel</div>
+        <div style="font-size:0.83rem; line-height:1.7; color:var(--text);">✅ Schneller bei Übung<br>✅ Kompakter<br>⚠️ Muss auswendig können<br>⚠️ Verwechslungsgefahr</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; background:var(--green-light); border-radius:var(--radius-sm); padding:12px; font-size:0.85rem; color:var(--green); font-weight:700;">
+      💡 Tipp vom Papa: Starte mit Dreisatz — wenn du sicher bist, lernst du die Formel dazu. Beide Wege sind in der Schulaufgabe erlaubt!
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ AUFGABENTYPEN ═══════════ -->
+<div class="tab-panel" id="tab-aufgaben">
+
+  <p class="sec-label">Typ 1 — Prozentwert berechnen (W = ?)</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">Prozentwert W gesucht</span>
+      <h3>Ein Fahrrad kostet 320 €. Es ist 15 % reduziert. Wie viel Euro Rabatt gibt es?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step">
+        <div class="ls-dot">1</div>
+        <div class="ls-text"><strong>Was habe ich?</strong><br>G = 320 € &nbsp;·&nbsp; p = 15 %&nbsp;·&nbsp; W = ?</div>
+      </div>
+      <div class="loesung-step">
+        <div class="ls-dot">2</div>
+        <div class="ls-text"><strong>Formel:</strong> W = G · p ÷ 100<br>
+          <span class="calc">W = 320 · 15 ÷ 100 = 48 €</span>
+        </div>
+      </div>
+      <div class="answer-box">✅ Der Rabatt beträgt 48 €. Das Fahrrad kostet also noch 320 − 48 = 272 €.</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Typ 2 — Prozentsatz berechnen (p = ?)</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pz">Prozentsatz p gesucht</span>
+      <h3>Von 40 Schülerinnen in der Klasse sind 14 krank. Wie viel Prozent fehlen?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step">
+        <div class="ls-dot">1</div>
+        <div class="ls-text"><strong>Was habe ich?</strong><br>G = 40 (alle Schüler) &nbsp;·&nbsp; W = 14 (fehlende) &nbsp;·&nbsp; p = ?</div>
+      </div>
+      <div class="loesung-step">
+        <div class="ls-dot">2</div>
+        <div class="ls-text"><strong>Formel:</strong> p = W · 100 ÷ G<br>
+          <span class="calc">p = 14 · 100 ÷ 40 = 35 %</span>
+        </div>
+      </div>
+      <div class="answer-box">✅ 35 % der Schülerinnen fehlen.</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Typ 3 — Grundwert berechnen (G = ?)</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-gw">Grundwert G gesucht</span>
+      <h3>Nach 20 % Rabatt kostet eine Jacke noch 64 €. Was hat sie vorher gekostet?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step">
+        <div class="ls-dot">1</div>
+        <div class="ls-text"><strong>Achtung!</strong> 64 € ist nicht W (der Rabatt), sondern der <strong>Rest nach dem Rabatt</strong>. Also: 100 % − 20 % = 80 %. Die 64 € entsprechen 80 % des Originalpreises.<br>
+        → W = 64 € &nbsp;·&nbsp; p = 80 % &nbsp;·&nbsp; G = ?</div>
+      </div>
+      <div class="loesung-step">
+        <div class="ls-dot">2</div>
+        <div class="ls-text"><strong>Formel:</strong> G = W · 100 ÷ p<br>
+          <span class="calc">G = 64 · 100 ÷ 80 = 80 €</span>
+        </div>
+      </div>
+      <div class="answer-box">✅ Die Jacke hat vorher 80 € gekostet.</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Typ 4 — Preis nach Rabatt / Aufschlag</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-txt">Rabatt & Aufschlag</span>
+      <h3>Ein Handy kostet 480 €. Der Händler gibt dir 12 % Rabatt. Was zahlst du?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step">
+        <div class="ls-dot">1</div>
+        <div class="ls-text"><strong>Weg 1 (zwei Schritte):</strong><br>
+        Rabatt = 480 · 12 ÷ 100 = 57,60 €<br>
+        <span class="calc">Preis = 480 − 57,60 = 422,40 €</span>
+        </div>
+      </div>
+      <div class="loesung-step">
+        <div class="ls-dot">2</div>
+        <div class="ls-text"><strong>Weg 2 (Profi-Trick, ein Schritt):</strong><br>
+        100 % − 12 % = 88 %. Du zahlst 88 % des Preises.<br>
+        <span class="calc">Preis = 480 · 0,88 = 422,40 €</span>
+        </div>
+      </div>
+      <div class="answer-box">✅ Du zahlst 422,40 €. Beide Wege führen zum gleichen Ergebnis!</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ TEXTAUFGABEN ═══════════ -->
+<div class="tab-panel" id="tab-textaufgaben">
+
+  <div class="detective">
+    <h3>🔍 Du bist Detektiv — nicht Leser!</h3>
+    <p>Bei Textaufgaben geht es nicht darum, den Text zu verstehen wie ein Buch. Du jagst nur 3 Informationen. Der Rest des Textes ist Deko!</p>
+
+    <div class="clue">
+      <div class="clue-icon">🏠</div>
+      <div class="clue-text">
+        <strong>Clue 1: Das GANZE (G)</strong>
+        Gibt es eine große Ausgangszahl? „Ein Auto kostet...", „Die Klasse hat ... Schüler", „Das Produkt wog ...". Das ist G.
+      </div>
+    </div>
+
+    <div class="clue">
+      <div class="clue-icon">%</div>
+      <div class="clue-text">
+        <strong>Clue 2: Die PROZENT-ZAHL (p)</strong>
+        Gibt es eine Zahl mit % oder Signalwort (Hälfte, Viertel, Drittel)? Das ist p.
+      </div>
+    </div>
+
+    <div class="clue">
+      <div class="clue-icon">❓</div>
+      <div class="clue-text">
+        <strong>Clue 3: Was wird GEFRAGT?</strong>
+        Lies den letzten Satz genau! Dort steht, was du ausrechnen sollst. Das markierst du gelb.
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label">Die 4-Schritt-Methode für JEDE Textaufgabe</p>
+
+  <div class="card steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>📖 Lies die Aufgabe zweimal</h4>
+        <p>Beim ersten Mal: Verstehe das Thema (Einkauf? Schule? Sport?). Beim zweiten Mal: suche gezielt nach G, p, W.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>✍️ Schreib G = ?, p = ?, W = ? hin</h4>
+        <p>Fülle die Werte ein, die du kennst. Was leer bleibt = was du berechnen musst. Das geht in 10 Sekunden!</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>🔢 Setze in die richtige Formel ein</h4>
+        <p>W fehlt → <code>W = G · p ÷ 100</code> &nbsp;·&nbsp; p fehlt → <code>p = W · 100 ÷ G</code> &nbsp;·&nbsp; G fehlt → <code>G = W · 100 ÷ p</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>📝 Schreib einen Antwortsatz mit Einheit</h4>
+        <p>„Der Prozentwert beträgt <strong>___</strong>." oder „Der Grundwert beträgt <strong>___</strong> €." — nie ohne Einheit!</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label">Vollständiges Beispiel: Textaufgabe Schritt für Schritt</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-txt">Textaufgabe komplett</span>
+      <h3>„Im Sommer kauft Lena ein Kleid, das normalerweise 85 € kostet. Da es Schlussverkauf ist, bekommt sie 30 % Rabatt. Ihr Freund Jonas kauft dasselbe Kleid als Geschenk für seine Schwester und zahlt den vollen Preis. Wie viel spart Lena im Vergleich zu Jonas?"</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt-Lösung ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step">
+        <div class="ls-dot">1</div>
+        <div class="ls-text"><strong>Text zerlegen:</strong><br>
+        G = 85 € (normaler Preis) &nbsp;·&nbsp; p = 30 % (Rabatt) &nbsp;·&nbsp; W = ? (Ersparnis)<br>
+        Jonas und Lena → Ablenkung! Der Kern ist: wie viel ist 30 % von 85 €?</div>
+      </div>
+      <div class="loesung-step">
+        <div class="ls-dot">2</div>
+        <div class="ls-text"><strong>Formel:</strong> W = G · p ÷ 100<br>
+          <span class="calc">W = 85 · 30 ÷ 100 = 25,50 €</span>
+        </div>
+      </div>
+      <div class="answer-box">✅ Lena spart 25,50 € im Vergleich zu Jonas. (Den Rest des Textes brauchst du nicht einmal!)</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Häufige Fallen in Textaufgaben</p>
+
+  <div class="tipp-list">
+    <div class="tipp">
+      <div class="tipp-icon">⚠️</div>
+      <div class="tipp-text">
+        <strong>Falle 1: „nach dem Rabatt" ≠ Rabatt selbst</strong>
+        „Das Hemd kostet nach 20 % Rabatt noch 40 €" → Die 40 € sind 80 % (nicht 100 %). Also: G = 40 · 100 ÷ 80 = 50 €.
+      </div>
+    </div>
+    <div class="tipp">
+      <div class="tipp-icon">⚠️</div>
+      <div class="tipp-text">
+        <strong>Falle 2: Zu viel Information</strong>
+        Namen, Orte, Hintergrundgeschichten → ignorieren! Schreib nur G, p, W hin und übersieh alles andere.
+      </div>
+    </div>
+    <div class="tipp">
+      <div class="tipp-icon">⚠️</div>
+      <div class="tipp-text">
+        <strong>Falle 3: Einheit vergessen</strong>
+        30 % von 80 € ist 24 € — nicht einfach nur „24". Immer die Einheit der Ausgangsgröße übernehmen!
+      </div>
+    </div>
+    <div class="tipp">
+      <div class="tipp-icon">⚠️</div>
+      <div class="tipp-text">
+        <strong>Falle 4: Was wird wirklich gefragt?</strong>
+        Manchmal wird nicht der Rabatt gefragt, sondern der <em>neue Preis</em>. Lies den letzten Satz sehr genau!
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ TRAINING ═══════════ -->
+<div class="tab-panel" id="tab-training">
+
+  <div class="moti-banner">
+    <h2>🏋️ Trainingsaufgaben — 10 Runden!</h2>
+    <p>Erst selbst rechnen, dann Lösung aufdecken. Wer alle 10 schafft, ist bereit für die Schulaufgabe!</p>
+  </div>
+
+  <p class="sec-label">Runde 1–4 — Prozentwert W berechnen</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">W gesucht</span><span class="schwierigkeit leicht" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#dcfce7;color:#16a34a;margin-left:6px;">Leicht</span>
+      <h3>Aufgabe 1: Jonas hat 60 € Taschengeld im Monat. Er spart 25 % davon. Wie viel Euro spart er?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--purple-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        100 % → 60 €<br>
+        &nbsp;&nbsp;1 % → 60 ÷ 100 = 0,60 €<br>
+        &nbsp;25 % → 0,60 × 25 = <strong style="color:var(--purple);">15 €</strong>
+      </div>
+      <div class="answer-box">✅ Jonas spart 15 € pro Monat.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">W gesucht</span><span class="schwierigkeit leicht" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#dcfce7;color:#16a34a;margin-left:6px;">Leicht</span>
+      <h3>Aufgabe 2: Ein Schulranzen kostet 120 €. Im Angebot bekommt man 30 % Rabatt. Wie viel spart man?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--purple-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        100 % → 120 €<br>
+        &nbsp;&nbsp;1 % → 120 ÷ 100 = 1,20 €<br>
+        &nbsp;30 % → 1,20 × 30 = <strong style="color:var(--purple);">36 €</strong>
+      </div>
+      <div class="answer-box">✅ Man spart 36 €. Der Ranzen kostet noch 84 €.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">W gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 3: In einer Klasse mit 28 Schülern sind 75 % in einem Sportverein. Wie viele Schüler sind das?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--purple-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        100 % → 28 Schüler<br>
+        &nbsp;&nbsp;1 % → 28 ÷ 100 = 0,28<br>
+        &nbsp;75 % → 0,28 × 75 = <strong style="color:var(--purple);">21 Schüler</strong>
+      </div>
+      <div class="answer-box">✅ 21 Schüler sind in einem Sportverein.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pw">W gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 4: Ein Fahrrad kostet 380 €. Dazu kommt 19 % Mehrwertsteuer. Wie viel beträgt die Steuer in Euro?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--purple-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        100 % → 380 €<br>
+        &nbsp;&nbsp;1 % → 380 ÷ 100 = 3,80 €<br>
+        &nbsp;19 % → 3,80 × 19 = <strong style="color:var(--purple);">72,20 €</strong>
+      </div>
+      <div class="answer-box">✅ Die Mehrwertsteuer beträgt 72,20 €. Gesamtpreis: 380 + 72,20 = 452,20 €.</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Runde 5–7 — Prozentsatz p berechnen</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pz">p gesucht</span><span class="schwierigkeit leicht" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#dcfce7;color:#16a34a;margin-left:6px;">Leicht</span>
+      <h3>Aufgabe 5: Mia hat eine Prüfung mit 40 Fragen. Sie beantwortet 34 richtig. Wie viel Prozent hat sie?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--pink-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        40 Fragen → 100 %<br>
+        &nbsp;&nbsp;1 Frage  → 100 ÷ 40 = 2,5 %<br>
+        34 Fragen → 2,5 × 34 = <strong style="color:var(--pink);">85 %</strong>
+      </div>
+      <div class="answer-box">✅ Mia hat 85 % der Fragen richtig beantwortet. Super!</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pz">p gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 6: Ein Pullover kostete 80 €, jetzt kostet er 56 €. Um wie viel Prozent wurde er reduziert?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--pink-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        Rabatt in € = 80 − 56 = 24 €<br>
+        80 € → 100 %<br>
+        &nbsp;1 € → 100 ÷ 80 = 1,25 %<br>
+        24 € → 1,25 × 24 = <strong style="color:var(--pink);">30 %</strong>
+      </div>
+      <div class="answer-box">✅ Der Pullover wurde um 30 % reduziert.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-pz">p gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 7: In einer Stadt leben 80.000 Menschen. 12.000 davon fahren täglich mit dem Fahrrad. Wie viel Prozent sind das?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--pink-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        80.000 → 100 %<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 → 100 ÷ 80.000 = 0,00125 %<br>
+        12.000 → 0,00125 × 12.000 = <strong style="color:var(--pink);">15 %</strong>
+      </div>
+      <div class="answer-box">✅ 15 % der Stadtbewohner fahren täglich Fahrrad.</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Runde 8–10 — Grundwert G berechnen (die Königsklasse!)</p>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-gw">G gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 8: Nach 10 % Rabatt kostet ein Buch noch 13,50 €. Was hat es vorher gekostet?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="background:var(--amber-light); border-radius:6px; padding:8px 12px; margin-top:8px; font-size:0.82rem; color:var(--amber);">⚠️ 13,50 € = 90 % (weil 100 − 10 = 90 %)</div>
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--teal-light); border-radius:var(--radius-sm); padding:12px; margin-top:8px; font-size:0.88rem; line-height:2;">
+        &nbsp;90 % → 13,50 €<br>
+        &nbsp;&nbsp;1 % → 13,50 ÷ 90 = 0,15 €<br>
+        100 % → 0,15 × 100 = <strong style="color:var(--teal);">15 €</strong>
+      </div>
+      <div class="answer-box">✅ Das Buch hat vorher 15 € gekostet. Check: 10 % von 15 = 1,50 → 15 − 1,50 = 13,50 ✔️</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-gw">G gesucht</span><span class="schwierigkeit mittel" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#d97706;margin-left:6px;">Mittel</span>
+      <h3>Aufgabe 9: 35 % der Schüler einer Schule machen Hausaufgaben regelmäßig. Das sind 105 Schüler. Wie viele Schüler hat die Schule insgesamt?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--teal-light); border-radius:var(--radius-sm); padding:12px; margin-top:10px; font-size:0.88rem; line-height:2;">
+        &nbsp;35 % → 105 Schüler<br>
+        &nbsp;&nbsp;1 % → 105 ÷ 35 = 3 Schüler<br>
+        100 % → 3 × 100 = <strong style="color:var(--teal);">300 Schüler</strong>
+      </div>
+      <div class="answer-box">✅ Die Schule hat insgesamt 300 Schüler.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge badge-gw">G gesucht</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Schwer</span>
+      <h3>Aufgabe 10: Ein Händler erhöht den Preis eines Laptops um 12 %. Jetzt kostet er 560 €. Was hat er vorher gekostet?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Lösung zeigen ▾</button>
+    <div class="loesung-body">
+      <div style="background:var(--amber-light); border-radius:6px; padding:8px 12px; margin-top:8px; font-size:0.82rem; color:var(--amber);">⚠️ Preiserhöhung! 560 € = 112 % (weil 100 + 12 = 112 %)</div>
+      <div style="font-family:'JetBrains Mono',monospace; background:var(--teal-light); border-radius:var(--radius-sm); padding:12px; margin-top:8px; font-size:0.88rem; line-height:2;">
+        112 % → 560 €<br>
+        &nbsp;&nbsp;1 % → 560 ÷ 112 = 5 €<br>
+        100 % → 5 × 100 = <strong style="color:var(--teal);">500 €</strong>
+      </div>
+      <div class="answer-box">✅ Der Laptop hat vorher 500 € gekostet. Check: 12 % von 500 = 60 → 500 + 60 = 560 ✔️</div>
+    </div>
+  </div>
+
+  <div class="moti-banner" style="margin-top:20px;">
+    <h2>🎉 Alle 10 geschafft?</h2>
+    <p>Dann bist du bereit für die Meister-Aufgaben! Klick auf 👑 Meister — aber nur wenn du mutig bist! 😄</p>
+  </div>
+
+</div>
+
+<!-- ═══════════ MEISTER ═══════════ -->
+<div class="tab-panel" id="tab-meister">
+
+  <div class="moti-banner" style="background: linear-gradient(135deg, #1e1033, #7c3aed);">
+    <h2>👑 Meister-Level — 5 komplexe Textaufgaben</h2>
+    <p>Das sind die härtesten Aufgaben. Wer diese löst, ist besser als 90 % der Klasse. Viel Erfolg!</p>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge" style="background:#1e1033;color:white;">👑 Meister 1</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Komplex</span>
+      <h3>Das Smartphone-Deal: Tim kauft ein Smartphone für 480 €. Der Händler gibt ihm 15 % Rabatt, weil er Stammkunde ist. Zusätzlich muss er 19 % Mehrwertsteuer auf den reduzierten Preis zahlen. Wie viel zahlt Tim insgesamt?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step"><div class="ls-dot">1</div><div class="ls-text"><strong>Schritt 1: Rabatt berechnen</strong><br>15 % von 480 €: 480 ÷ 100 × 15 = 72 € Rabatt<br><span class="calc">Preis nach Rabatt = 480 − 72 = 408 €</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">2</div><div class="ls-text"><strong>Schritt 2: MwSt. auf reduzierten Preis</strong><br>19 % von 408 €: 408 ÷ 100 × 19 = 77,52 €<br><span class="calc">Gesamtpreis = 408 + 77,52 = 485,52 €</span></div></div>
+      <div class="answer-box">✅ Tim zahlt insgesamt 485,52 €. (Interessant: Mit Rabatt + MwSt. zahlt er sogar mehr als der Originalpreis ohne MwSt.!)</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge" style="background:#1e1033;color:white;">👑 Meister 2</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Komplex</span>
+      <h3>Das Wahlergebnis: Bei einer Schulwahl erhält Kandidatin Anna 36 % der Stimmen, Kandidat Ben 45 % und der Rest geht an andere. Insgesamt wurden 200 Stimmen abgegeben. Wie viele Stimmen bekommen Anna und Ben zusammen, und wie viele Stimmen entfallen auf „andere"?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step"><div class="ls-dot">1</div><div class="ls-text"><strong>Anna's Stimmen:</strong><br><span class="calc">200 ÷ 100 × 36 = 72 Stimmen</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">2</div><div class="ls-text"><strong>Ben's Stimmen:</strong><br><span class="calc">200 ÷ 100 × 45 = 90 Stimmen</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">3</div><div class="ls-text"><strong>Andere:</strong><br>100 % − 36 % − 45 % = 19 %<br><span class="calc">200 ÷ 100 × 19 = 38 Stimmen</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">4</div><div class="ls-text"><strong>Anna + Ben zusammen:</strong><br><span class="calc">72 + 90 = 162 Stimmen</span></div></div>
+      <div class="answer-box">✅ Anna und Ben bekommen zusammen 162 Stimmen. Auf andere entfallen 38 Stimmen. Check: 72+90+38 = 200 ✔️</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge" style="background:#1e1033;color:white;">👑 Meister 3</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Komplex</span>
+      <h3>Die Gehaltserhöhung: Frau Müller verdient 2.400 € im Monat. Sie bekommt 8 % Gehaltserhöhung. Vom neuen Gehalt muss sie 30 % Steuern zahlen. Wie viel Netto (nach Steuern) bekommt sie nach der Erhöhung?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step"><div class="ls-dot">1</div><div class="ls-text"><strong>Neues Brutto-Gehalt:</strong><br>8 % von 2.400 = 2.400 ÷ 100 × 8 = 192 €<br><span class="calc">Neues Gehalt = 2.400 + 192 = 2.592 €</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">2</div><div class="ls-text"><strong>Steuern vom neuen Gehalt:</strong><br>30 % von 2.592 = 2.592 ÷ 100 × 30 = 777,60 €</div></div>
+      <div class="loesung-step"><div class="ls-dot">3</div><div class="ls-text"><strong>Netto-Gehalt:</strong><br><span class="calc">2.592 − 777,60 = 1.814,40 €</span></div></div>
+      <div class="answer-box">✅ Frau Müller bekommt nach der Erhöhung 1.814,40 € netto ausbezahlt.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge" style="background:#1e1033;color:white;">👑 Meister 4</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Komplex</span>
+      <h3>Der Gebrauchtwagen: Ein Auto wird zweimal verkauft. Der erste Besitzer kauft es neu für einen unbekannten Preis. Er verkauft es mit 25 % Verlust für 18.000 €. Der zweite Besitzer verkauft es dann mit 10 % Gewinn weiter. Für wie viel verkauft der zweite Besitzer das Auto?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step"><div class="ls-dot">1</div><div class="ls-text"><strong>Originalpreis des Autos finden:</strong><br>18.000 € = 75 % (weil 100 − 25 = 75 %)<br><span class="calc">1 % = 18.000 ÷ 75 = 240 € → 100 % = 240 × 100 = 24.000 €</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">2</div><div class="ls-text"><strong>Zweiter Besitzer verkauft mit 10 % Gewinn:</strong><br>Einkaufspreis des 2. Besitzers = 18.000 €<br>10 % Gewinn = 18.000 ÷ 100 × 10 = 1.800 €<br><span class="calc">Verkaufspreis = 18.000 + 1.800 = 19.800 €</span></div></div>
+      <div class="answer-box">✅ Der zweite Besitzer verkauft das Auto für 19.800 €. Das Originalauto kostete neu 24.000 €.</div>
+    </div>
+  </div>
+
+  <div class="aufgabe-block">
+    <div class="aufgabe-top">
+      <span class="aufgabe-badge" style="background:#1e1033;color:white;">👑 Meister 5</span><span class="schwierigkeit schwer" style="display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:#fee2e2;color:#dc2626;margin-left:6px;">Meister-Komplex</span>
+      <h3>Das Schulprojekt: An einem Schulprojekt nehmen 3 Klassen teil. Klasse 7a hat 30 Schüler, davon machen 60 % mit. Klasse 7b hat 25 Schüler, davon machen 80 % mit. Klasse 7c hat 20 Schüler, davon machen 100 % mit. Wie viel Prozent aller Schüler der drei Klassen nehmen insgesamt am Projekt teil?</h3>
+    </div>
+    <button class="loesung-toggle" onclick="toggleL(this)">💡 Schritt-für-Schritt ▾</button>
+    <div class="loesung-body">
+      <div class="loesung-step"><div class="ls-dot">1</div><div class="ls-text"><strong>Teilnehmer aus jeder Klasse:</strong><br>7a: 30 ÷ 100 × 60 = 18 Schüler<br>7b: 25 ÷ 100 × 80 = 20 Schüler<br><span class="calc">7c: 20 ÷ 100 × 100 = 20 Schüler</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">2</div><div class="ls-text"><strong>Gesamtzahlen:</strong><br>Alle Schüler: 30 + 25 + 20 = 75<br><span class="calc">Teilnehmende: 18 + 20 + 20 = 58</span></div></div>
+      <div class="loesung-step"><div class="ls-dot">3</div><div class="ls-text"><strong>Prozentualer Anteil:</strong><br>75 Schüler → 100 %<br>1 Schüler → 100 ÷ 75 = 1,333…%<br><span class="calc">58 Schüler → 1,333 × 58 ≈ 77,3 %</span></div></div>
+      <div class="answer-box">✅ Ca. 77,3 % aller Schüler der drei Klassen nehmen am Projekt teil. (Achtung: Man kann nicht einfach 60+80+100 ÷ 3 rechnen — das wäre falsch, weil die Klassen unterschiedlich groß sind!)</div>
+    </div>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#1e1033,#3b1d8a); color:white; border:none; text-align:center; margin-top:8px;">
+    <div style="font-size:2rem; margin-bottom:8px;">🏆</div>
+    <div style="font-weight:900; font-size:1.1rem; margin-bottom:8px;">Du hast alle 5 Meister-Aufgaben gelöst!</div>
+    <div style="font-size:0.88rem; opacity:0.88; line-height:1.7;">Papa ist stolz auf dich. Du bist jetzt offiziell Prozentrechnung-Meisterin! 💜<br>Die Schulaufgabe? Kein Problem mehr!</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ SYNONYME ═══════════ -->
+<div class="tab-panel" id="tab-synonyme">
+
+  <div class="card" style="margin-bottom:14px;">
+    <div style="font-size:0.9rem; line-height:1.7; color:var(--text);">
+      🔍 <strong>Erkenne das Signalwort → weißt du sofort, was gesucht ist!</strong><br>
+      Diese Wörter tauchen in JEDER Aufgabe auf. Wenn du sie kennst, bist du unschlagbar.
+    </div>
+  </div>
+
+  <p class="sec-label">Signalwörter für den Grundwert G</p>
+  <div class="syn-grid">
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„wovon", „von insgesamt"</div>
+      <div class="syn-equals">→ G (das Ganze)</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„ursprünglicher Preis"</div>
+      <div class="syn-equals">→ G (vor Rabatt)</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„Ausgangswert"</div>
+      <div class="syn-equals">→ G</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„vollständige Menge"</div>
+      <div class="syn-equals">→ G</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Signalwörter für den Prozentwert W</p>
+  <div class="syn-grid">
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">Rabatt / Nachlass</div>
+      <div class="syn-equals">→ W (in €/kg/...)</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„wie viel spart man?"</div>
+      <div class="syn-equals">→ W berechnen</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„wie viel sind X %?"</div>
+      <div class="syn-equals">→ W berechnen</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">Aufschlag / Zulage</div>
+      <div class="syn-equals">→ W (positiv)</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Signalwörter für den Prozentsatz p</p>
+  <div class="syn-grid">
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„wie viel Prozent?"</div>
+      <div class="syn-equals">→ p berechnen</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„prozentualer Anteil"</div>
+      <div class="syn-equals">→ p berechnen</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Signalwort</div>
+      <div class="syn-word">„Quote / Rate"</div>
+      <div class="syn-equals">→ p</div>
+    </div>
+  </div>
+
+  <p class="sec-label">Die wichtigsten Prozent-Werte auswendig lernen 🧠</p>
+
+  <div class="syn-grid">
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">die Hälfte</div>
+      <div class="syn-equals">= 1/2 = 50 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">ein Viertel</div>
+      <div class="syn-equals">= 1/4 = 25 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">drei Viertel</div>
+      <div class="syn-equals">= 3/4 = 75 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">ein Drittel</div>
+      <div class="syn-equals">= 1/3 ≈ 33,3 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">zwei Drittel</div>
+      <div class="syn-equals">= 2/3 ≈ 66,7 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">ein Zehntel</div>
+      <div class="syn-equals">= 1/10 = 10 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">ein Fünftel</div>
+      <div class="syn-equals">= 1/5 = 20 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Bruchteil</div>
+      <div class="syn-word">das Ganze / alles</div>
+      <div class="syn-equals">= 1/1 = 100 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Begriff</div>
+      <div class="syn-word">MwSt. (19 %)</div>
+      <div class="syn-equals">→ p = 19 (DE)</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Begriff</div>
+      <div class="syn-word">doppelt so viel</div>
+      <div class="syn-equals">= 200 %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Begriff</div>
+      <div class="syn-word">um X % mehr</div>
+      <div class="syn-equals">= (100+X) %</div>
+    </div>
+    <div class="syn-card">
+      <div class="syn-trigger">Begriff</div>
+      <div class="syn-word">um X % weniger</div>
+      <div class="syn-equals">= (100−X) %</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ RECHNER ═══════════ -->
+<div class="tab-panel" id="tab-rechner">
+
+  <div class="calc-card">
+    <h3>🧮 Dein persönlicher Prozent-Rechner</h3>
+    <p>Gib zwei Werte ein — ich berechne den dritten für dich!</p>
+
+    <div class="calc-toggle-row">
+      <button class="calc-mode active" onclick="setMode('pw')">W suchen</button>
+      <button class="calc-mode" onclick="setMode('pz')">p suchen</button>
+      <button class="calc-mode" onclick="setMode('gw')">G suchen</button>
+    </div>
+
+    <div id="calc-pw">
+      <div class="input-row">
+        <div class="input-group">
+          <label>Grundwert G</label>
+          <input type="number" id="pw-g" placeholder="z.B. 200">
+        </div>
+        <div class="input-group">
+          <label>Prozentsatz p (%)</label>
+          <input type="number" id="pw-p" placeholder="z.B. 15">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calc('pw')">Prozentwert berechnen ✨</button>
+    </div>
+
+    <div id="calc-pz" style="display:none">
+      <div class="input-row">
+        <div class="input-group">
+          <label>Grundwert G</label>
+          <input type="number" id="pz-g" placeholder="z.B. 200">
+        </div>
+        <div class="input-group">
+          <label>Prozentwert W</label>
+          <input type="number" id="pz-w" placeholder="z.B. 30">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calc('pz')">Prozentsatz berechnen ✨</button>
+    </div>
+
+    <div id="calc-gw" style="display:none">
+      <div class="input-row">
+        <div class="input-group">
+          <label>Prozentwert W</label>
+          <input type="number" id="gw-w" placeholder="z.B. 30">
+        </div>
+        <div class="input-group">
+          <label>Prozentsatz p (%)</label>
+          <input type="number" id="gw-p" placeholder="z.B. 15">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calc('gw')">Grundwert berechnen ✨</button>
+    </div>
+
+    <div class="calc-result" id="calc-result">
+      <div style="opacity:0.5; font-size:0.88rem;">Gib Werte ein und klicke auf Berechnen</div>
+    </div>
+  </div>
+
+  <p class="sec-label">So benutzt du den Rechner zum Lernen</p>
+
+  <div class="tipp-list">
+    <div class="tipp">
+      <div class="tipp-icon">💡</div>
+      <div class="tipp-text">
+        <strong>Rechne zuerst selbst auf Papier!</strong>
+        Dann überprüfe mit dem Rechner. So lernst du und siehst sofort, ob du richtig lagst.
+      </div>
+    </div>
+    <div class="tipp">
+      <div class="tipp-icon">🎯</div>
+      <div class="tipp-text">
+        <strong>Erfinde eigene Aufgaben!</strong>
+        Denke an echte Situationen: Taschengeld, Rabatte beim Einkaufen, deine Schulnoten. Rechne Prozent in deinem Alltag!
+      </div>
+    </div>
+    <div class="tipp">
+      <div class="tipp-icon">🏆</div>
+      <div class="tipp-text">
+        <strong>Du machst Fehler? Super!</strong>
+        Fehler zeigen dir genau, was du noch üben musst. Jeder Fehler macht dich stärker — nicht schwächer!
+      </div>
+    </div>
+  </div>
+
+  <div class="moti-banner" style="margin-top:20px;">
+    <h2>💜 Du bist großartig!</h2>
+    <p>Mathe ist kein Talent — Mathe ist Übung. Und du übst gerade. Das macht mich so stolz auf dich! 🌟 Wenn du 3 Aufgaben am Tag löst, wirst du in einer Woche unschlagbar sein!</p>
+  </div>
+
+</div>
+
+</div><!-- /content -->
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleL(btn) {
+  const box = btn.nextElementSibling;
+  const open = box.classList.toggle('open');
+  btn.textContent = open ? '✅ Lösung ausblenden ▴' : '💡 Lösung zeigen ▾';
+}
+
+let currentMode = 'pw';
+
+function setMode(mode) {
+  currentMode = mode;
+  ['pw','pz','gw'].forEach(m => {
+    document.getElementById('calc-' + m).style.display = m === mode ? 'block' : 'none';
+  });
+  document.querySelectorAll('.calc-mode').forEach((b, i) => {
+    b.classList.toggle('active', ['pw','pz','gw'][i] === mode);
+  });
+  document.getElementById('calc-result').innerHTML = '<div style="opacity:0.5;font-size:0.88rem;">Gib Werte ein und klicke auf Berechnen</div>';
+}
+
+function calc(mode) {
+  let result, label;
+  if (mode === 'pw') {
+    const g = parseFloat(document.getElementById('pw-g').value);
+    const p = parseFloat(document.getElementById('pw-p').value);
+    if (isNaN(g) || isNaN(p)) { showError(); return; }
+    result = (g * p / 100).toFixed(2);
+    label = `W = ${g} · ${p} ÷ 100`;
+  } else if (mode === 'pz') {
+    const g = parseFloat(document.getElementById('pz-g').value);
+    const w = parseFloat(document.getElementById('pz-w').value);
+    if (isNaN(g) || isNaN(w)) { showError(); return; }
+    result = (w * 100 / g).toFixed(2) + ' %';
+    label = `p = ${w} · 100 ÷ ${g}`;
+  } else {
+    const w = parseFloat(document.getElementById('gw-w').value);
+    const p = parseFloat(document.getElementById('gw-p').value);
+    if (isNaN(w) || isNaN(p)) { showError(); return; }
+    result = (w * 100 / p).toFixed(2);
+    label = `G = ${w} · 100 ÷ ${p}`;
+  }
+  document.getElementById('calc-result').innerHTML =
+    `<div><div class="result-value">${result}</div><div class="result-label">${label} = ${result}</div></div>`;
+}
+
+function showError() {
+  document.getElementById('calc-result').innerHTML =
+    '<div style="opacity:0.7;font-size:0.88rem;">⚠️ Bitte beide Felder ausfüllen!</div>';
+}
+</script>
+</body>
+</html>
